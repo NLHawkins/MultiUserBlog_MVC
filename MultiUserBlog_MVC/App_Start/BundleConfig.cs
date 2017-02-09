@@ -21,11 +21,15 @@ namespace MultiUserBlog_MVC
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/jqBootstrapValidation.js",
+                      "~/Scripts/contact_me.js",
+                      "~/Scripts/clean-blog.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/clean-blog.min.css",
+                      "~/fonts/font-awesome/css/font-awesome.min.css"));
         }
     }
 }

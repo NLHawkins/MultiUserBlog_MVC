@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiUserBlog_MVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +9,20 @@ namespace MultiUserBlog_MVC.Controllers
 {
     public class HomeController : Controller
     {
+
+        ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
+            ViewBag.BlogPosts = db.BlogPosts.ToList(); 
             return View();
         }
 
-        public ActionResult About()
+        
+        public ActionResult Create()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
         }
     }
-}
