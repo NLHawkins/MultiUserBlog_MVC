@@ -16,59 +16,31 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Title)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Title)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SampleText)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.SampleText)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Author)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Author)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Created)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Created)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Body)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Body)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Public)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Public)
-                </dd>
-
-            </dl>
+            <div>
+                <h4>BlogPost</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="post-preview">
+                            <p>
+                                <h2 class="post-title">
+                                    @Model.Title
+                                </h2>
+                            </p>
+                            <p>
+                                <h5>
+                                    @Model.
+                                </h5>
+                            </p>
+                            <p class="post-meta">Posted by You on @Model.Created</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 
 @using (Html.BeginForm())

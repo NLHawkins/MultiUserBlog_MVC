@@ -17,7 +17,7 @@ namespace MultiUserBlog_MVC.Models
 
         public string SampleText { get; set; }
 
-        [DisplayName("What is your name?")]
+        
         public string Author { get; set; }
 
         public DateTime Created { get; set; }

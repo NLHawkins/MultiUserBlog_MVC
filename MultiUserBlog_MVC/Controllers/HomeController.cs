@@ -13,7 +13,7 @@ namespace MultiUserBlog_MVC.Controllers
         ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            ViewBag.BlogPosts = db.BlogPosts.ToList(); 
+            ViewBag.PublicBlogPosts = db.BlogPosts.Where(p => p.Public == true).ToList(); 
             return View();
         }
 

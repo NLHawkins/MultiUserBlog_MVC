@@ -14,9 +14,32 @@
 </header>
 
 <div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            
-            
-           
+    @foreach (var blogPost in ViewBag.PublicBlogPosts)
+    {
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-preview">
+                    <p>
+                        <h2 class="post-title">
+                            @Html.ActionLink((string)blogPost.Title, "Details", "BlogPost", new { Id = blogPost.Id }, new { })
+                        </h2>
+                    </p>
+                    <p>
+                        <h3 class="post-subtitle">
+                           @blogPost.SampleText;
+                        </h3>
+                    </p>
+                    <p>
+                        <h5>
+                            @Html.DisplayName((string)blogPost.Body)
+                        </h5>
+                    </p>
+                    <p class="post-meta">Posted by @Html.DisplayName((string)blogPost.Author) on @Html.DisplayName((string)blogPost.Created.ToString())</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
 

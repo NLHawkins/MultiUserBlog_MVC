@@ -218,6 +218,10 @@
     <Compile Include="Migrations\201702092041192_another.Designer.cs">
       <DependentUpon>201702092041192_another.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702101817075_OwnerandOwnerIDadded.cs" />
+    <Compile Include="Migrations\201702101817075_OwnerandOwnerIDadded.Designer.cs">
+      <DependentUpon>201702101817075_OwnerandOwnerIDadded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BlogPosts.cs" />
@@ -329,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702092041192_another.resx">
       <DependentUpon>201702092041192_another.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702101817075_OwnerandOwnerIDadded.resx">
+      <DependentUpon>201702101817075_OwnerandOwnerIDadded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

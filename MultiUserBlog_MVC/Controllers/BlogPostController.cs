@@ -7,23 +7,35 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MultiUserBlog_MVC.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MultiUserBlog_MVC.Controllers
 {
     public class BlogPostController : Controller
     {
+
         private ApplicationDbContext db = new ApplicationDbContext();
+        
+        public IQueryable<BlogPosts> GetBlogposts()
+        {
+            string userId = User.Identity.GetUserId();
+            var blogposts = db.BlogPosts.Include(b => b.Owner).Where(b => b.OwnerId == userId);
+            return blogposts;
+        }
+
 
         // GET: BlogPost
         public ActionResult Index()
         {
-            ViewBag.AllBlogPosts = db.BlogPosts.ToList();
-            return View(db.BlogPosts.ToList());
+           ViewBag.User = User.Identity.GetUserName();
+            ViewBag.OwnerBlogPosts = GetBlogposts();
+            return View(db.BlogPosts.Where(p => p.Public == true).ToList());
         }
 
         // GET: BlogPost/Details/5
         public ActionResult Details(int? id)
         {
+                            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -33,6 +45,7 @@ namespace MultiUserBlog_MVC.Controllers
             {
                 return HttpNotFound();
             }
+            
             return View(blogPost);
         }
 
@@ -47,16 +60,32 @@ namespace MultiUserBlog_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,SampleText,Author,Created,Body,Public")] BlogPosts blogPost)
+        public ActionResult Create([Bind(Include = "Id,Title,SampleText,Body,Public")] BlogPosts blogPost)
         {
+            string userId = User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
+                if (blogPost.SampleText == null)
+                {
+                    if (blogPost.Body.Length > 40)
+                    {
+                        blogPost.SampleText = blogPost.Body.Substring(0, 40) + "...";
+                    }
+
+                    else
+                    {
+                        blogPost.SampleText = blogPost.Body;
+                    }
+                }
+                
+                blogPost.Created = DateTime.Now;
+                blogPost.OwnerId = User.Identity.GetUserId();
+                blogPost.Author = User.Identity.GetUserName();
                 db.BlogPosts.Add(blogPost);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(blogPost);
+            return View();
         }
 
         // GET: BlogPost/Edit/5
