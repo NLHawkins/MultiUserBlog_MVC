@@ -1,5 +1,5 @@
 ﻿@model MultiUserBlog_MVC.Models.BlogPosts
-<header class="intro-header" style="background-image: url('/img/Wanderlust.jpg')">
+<header class="intro-header" style="background-image: url('/img/fwwj5y1igqg-alessandro-viaro.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -13,43 +13,40 @@
     </div>
 </header>
 
+
+
 <div class="container">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <div>
-                <h4>BlogPost</h4>
-                <hr />
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <div class="post-preview">
-                            <p>
-                                <h2 class="post-title">
-                                    @Model.Title
-                                </h2>
-                            </p>
-                            <p>
-                                <h5>
-                                    @Model.
-                                </h5>
-                            </p>
-                            <p class="post-meta">Posted by You on @Model.Created</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="post-preview">
+                <p>
+                    @Model.Body
+                </p>
+                <p class="post-meta">Posted by @ViewBag.Author on @Model.Created</p>
             </div>
         </div>
     </div>
 </div>
 
-
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.AntiForgeryToken()
 
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "Index")
+    <div class="container">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" />
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+        <input type="button" value="Create" onclick="location.href='@Url.Action("Index", "BlogPost")'" />
     </div>
 }
+<div class="container">
+    <p>Photograph by <a href="https://www.flickr.com/photos/nasacommons/">Alessandro Viaro</a>.</p>
+</div>
+
+
+
 

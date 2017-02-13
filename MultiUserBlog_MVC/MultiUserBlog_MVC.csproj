@@ -240,11 +240,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\30bbkb2h2to-michal-dzierza.jpg" />
     <Content Include="img\about-bg.jpg" />
     <Content Include="img\contact-bg.jpg" />
+    <Content Include="img\fwwj5y1igqg-alessandro-viaro.jpg" />
     <Content Include="img\home-bg.jpg" />
+    <Content Include="img\hpiysnboraw-kalen-emsley.jpg" />
+    <Content Include="img\j8kmioltmga-matt-palmer.jpg" />
     <Content Include="img\post-bg.jpg" />
     <Content Include="img\post-sample-image.jpg" />
+    <Content Include="img\qvmqf_dl1h4-lance-asper.jpg" />
     <Content Include="img\Wanderlust.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

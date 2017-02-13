@@ -15,43 +15,65 @@ namespace MultiUserBlog_MVC.Controllers
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
-        
-        public IQueryable<BlogPosts> GetBlogposts()
+
+        public IQueryable<BlogPosts> GetOwnerAllPosts()
         {
             string userId = User.Identity.GetUserId();
             var blogposts = db.BlogPosts.Include(b => b.Owner).Where(b => b.OwnerId == userId);
             return blogposts;
         }
 
-
-        // GET: BlogPost
+        [Authorize]
         public ActionResult Index()
         {
-           ViewBag.User = User.Identity.GetUserName();
-            ViewBag.OwnerBlogPosts = GetBlogposts();
+            ViewBag.User = User.Identity.GetUserName();
+            ViewBag.OwnerBlogPosts = GetOwnerAllPosts().OrderByDescending(c => c.Created); 
             return View(db.BlogPosts.Where(p => p.Public == true).ToList());
         }
 
-        // GET: BlogPost/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
-        {
-                            
+        {                            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPosts blogPost = db.BlogPosts.Find(id);
-            if (blogPost == null)
+            string you = "You";
+            var userId = User.Identity.GetUserId();
+            BlogPosts publicPost = new BlogPosts();
+            BlogPosts detailPost = db.BlogPosts.
+                Where
+                    (b => b.Id == id
+                    && b.OwnerId == userId)
+                    .FirstOrDefault();
+            ViewBag.Author = you;
+            if(detailPost == null)
+            {
+                publicPost = db.BlogPosts
+                    .Where
+                        (b => b.Id == id
+                        && b.Public == true)
+                        .FirstOrDefault();
+                detailPost = publicPost;
+                ViewBag.Author = detailPost.Author;
+
+            }
+            if (detailPost == null)
             {
                 return HttpNotFound();
             }
-            
-            return View(blogPost);
+                      
+            return View(detailPost);
         }
 
-        // GET: BlogPost/Create
+        [Authorize]
         public ActionResult Create()
         {
+            var userId = User.Identity.GetUserId();
+            if(userId == null)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
 
@@ -60,9 +82,10 @@ namespace MultiUserBlog_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,SampleText,Body,Public")] BlogPosts blogPost)
+        public ActionResult Create([Bind(Include = "Title,SampleText,Body,Public")] BlogPosts blogPost)
         {
             string userId = User.Identity.GetUserId();
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
                 if (blogPost.SampleText == null)
@@ -88,14 +111,15 @@ namespace MultiUserBlog_MVC.Controllers
             return View();
         }
 
-        // GET: BlogPost/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPosts blogPost = db.BlogPosts.Find(id);
+            string userId = User.Identity.GetUserId();
+            BlogPosts blogPost = db.BlogPosts.Where(b => b.OwnerId == userId).Where(b => b.Id == id).FirstOrDefault();
             if (blogPost == null)
             {
                 return HttpNotFound();
@@ -119,14 +143,15 @@ namespace MultiUserBlog_MVC.Controllers
             return View(blogPost);
         }
 
-        // GET: BlogPost/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPosts blogPost = db.BlogPosts.Find(id);
+            string userId = User.Identity.GetUserId();
+            BlogPosts blogPost = db.BlogPosts.Where(b => b.OwnerId == userId).Where(b => b.Id == id).FirstOrDefault();
             if (blogPost == null)
             {
                 return HttpNotFound();
@@ -139,7 +164,8 @@ namespace MultiUserBlog_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BlogPosts blogPost = db.BlogPosts.Find(id);
+            string userId = User.Identity.GetUserId();
+            BlogPosts blogPost = db.BlogPosts.Where(b => b.OwnerId == userId).Where(b => b.Id == id).FirstOrDefault();            
             db.BlogPosts.Remove(blogPost);
             db.SaveChanges();
             return RedirectToAction("Index");

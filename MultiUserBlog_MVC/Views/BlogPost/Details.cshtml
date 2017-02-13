@@ -1,5 +1,5 @@
 ﻿@model MultiUserBlog_MVC.Models.BlogPosts
-<header class="intro-header" style="background-image: url('/img/contact-bg.jpg')">
+<header class="intro-header" style="background-image: url('/img/30bbkb2h2to-michal-dzierza.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -10,20 +10,22 @@
         </div>
     </div>
 </header>
-<div>
+<div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-preview">
                 <p>
                     @Model.Body
                 </p>
-                <p class="post-meta">Posted by You on @Model.Created</p>
+                <p class="post-meta">Posted by @ViewBag.Author on @Model.Created</p>
             </div>
         </div>
     </div>
+    <div class="post-preview">
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

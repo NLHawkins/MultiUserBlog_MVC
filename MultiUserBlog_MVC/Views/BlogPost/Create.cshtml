@@ -1,5 +1,5 @@
 ﻿@model MultiUserBlog_MVC.Models.BlogPosts
-<header class="intro-header" style="background-image: url('/img/contact-bg.jpg')">
+<header class="intro-header" style="background-image: url('/img/fwwj5y1igqg-alessandro-viaro.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -12,64 +12,65 @@
         </div>
     </div>
 </header>
-@using (Html.BeginForm())
-{
-    <
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>BlogPost</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @using (Html.BeginForm("Create", "BlogPost", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SampleText, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SampleText, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SampleText, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="container">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Public, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Public)
-                    @Html.ValidationMessageFor(model => model.Public, "", new { @class = "text-danger" })
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <form name="sentMessage" id="contactForm" novalidate>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder ="Title" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                @Html.LabelFor(model => model.SampleText, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.EditorFor(model => model.SampleText, new { htmlAttributes = new { @class = "form-control", placeholder = "Sample Text - Optional" } })
+                                @Html.ValidationMessageFor(model => model.SampleText, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })                              
+                                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control", placeholder = "Your Post Here" } })
+                                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Public)
+                                    @Html.ValidationMessageFor(model => model.Public, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.Public, htmlAttributes: new { @class = "control-label col-md-2" })                                
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <input type="submit" class="btn btn-default" value="Create Post" />
+                            </div>
+                        </div>
+                    </form>
+                    <p>
+                        @Html.ActionLink("Back", "Index")
+                    </p>
+                    <p>Photograph by <a href="https://www.flickr.com/photos/nasacommons/">Alessandro Viaro</a>.</p>
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-            <div>
-                <input class="btn btn-default" value="Back" href="@Url.Action("Back to List", "Index")" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    }
